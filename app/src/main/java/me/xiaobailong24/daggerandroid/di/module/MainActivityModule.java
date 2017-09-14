@@ -11,9 +11,8 @@ import me.xiaobailong24.daggerandroid.di.scope.ActivityScope;
  */
 @Module
 public abstract class MainActivityModule {
-
     @ActivityScope
-    @ContributesAndroidInjector(modules = MainModule.class)//Data Module
+    @ContributesAndroidInjector(modules = KobeModule.class)//Data Module
     abstract MainActivity contributeMainActivity();
 
 }

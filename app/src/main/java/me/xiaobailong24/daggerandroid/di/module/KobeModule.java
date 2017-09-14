@@ -10,11 +10,10 @@ import me.xiaobailong24.daggerandroid.entry.Person;
  * Dagger Module
  */
 @Module
-public class MainModule {
-
+public class KobeModule {
     @ActivityScope
     @Provides
-    public Person providePerson() {
+    public Person provideKobe() {
         return new Person("Kobe", 39);
     }
 }

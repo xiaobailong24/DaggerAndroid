@@ -11,6 +11,7 @@ import me.xiaobailong24.daggerandroid.di.scope.ActivityScope;
  * Dagger.Android Subcomponent
  */
 @ActivityScope
+//@Subcomponent
 @Subcomponent(modules = MainActivityModule.class)
 public interface MainActivitySubcomponent extends AndroidInjector<MainActivity> {
 
