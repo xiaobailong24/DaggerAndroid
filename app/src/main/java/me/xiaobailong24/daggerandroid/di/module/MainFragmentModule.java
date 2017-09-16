@@ -3,7 +3,7 @@ package me.xiaobailong24.daggerandroid.di.module;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import me.xiaobailong24.daggerandroid.MainFragment;
-import me.xiaobailong24.daggerandroid.di.scope.FragmentScope;
+import me.xiaobailong24.daggerlibrary.di.scope.FragmentScope;
 
 /**
  * Created by xiaobailong24 on 2017/9/14.

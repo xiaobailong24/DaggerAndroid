@@ -1,4 +1,4 @@
-package me.xiaobailong24.daggerandroid.di.scope;
+package me.xiaobailong24.daggerlibrary.di.scope;
 
 import java.lang.annotation.Retention;
 

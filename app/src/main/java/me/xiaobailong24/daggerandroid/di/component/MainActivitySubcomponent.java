@@ -4,7 +4,7 @@ import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 import me.xiaobailong24.daggerandroid.MainActivity;
 import me.xiaobailong24.daggerandroid.di.module.KobeModule;
-import me.xiaobailong24.daggerandroid.di.scope.ActivityScope;
+import me.xiaobailong24.daggerlibrary.di.scope.ActivityScope;
 
 /**
  * Created by xiaobailong24 on 2017/9/6.
