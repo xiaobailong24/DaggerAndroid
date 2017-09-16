@@ -3,6 +3,7 @@ package me.xiaobailong24.daggerandroid.di.component;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dagger.android.AndroidInjectionModule;
 import me.xiaobailong24.daggerandroid.MainApp;
 import me.xiaobailong24.daggerandroid.di.module.AppModule;
 import me.xiaobailong24.daggerandroid.di.module.MainActivityModule;
@@ -14,6 +15,7 @@ import me.xiaobailong24.daggerandroid.di.module.MainFragmentModule;
  */
 @Singleton
 @Component(modules = {AppModule.class,
+        AndroidInjectionModule.class,
         MainActivityModule.class,
         MainFragmentModule.class})
 public interface AppComponent {

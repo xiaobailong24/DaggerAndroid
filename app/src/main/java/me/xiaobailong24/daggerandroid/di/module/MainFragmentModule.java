@@ -11,13 +11,14 @@ import me.xiaobailong24.daggerandroid.di.scope.FragmentScope;
  */
 @Module
 public abstract class MainFragmentModule {
-/*    @Binds
-    @IntoMap
-    @FragmentKey(MainFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment>
-    bindYourFragmentInjectorFactory(MainFragmentSubcomponent.Builder builder);*/
-
+    /**
+     * 第二种注入方式。当 Subcomponent 和 它的 Builder 没有其它方法或超类型时：
+     * {@link me.xiaobailong24.daggerandroid.di.component.MainActivitySubcomponent}
+     * 可以不再需要 Subcomponent
+     * <p>
+     * 第一种{@link MainActivityModule}
+     */
     @FragmentScope
-    @ContributesAndroidInjector(modules = JordonModule.class)
+    @ContributesAndroidInjector(modules = JordonModule.class)//DataModule
     abstract MainFragment contributeMainFragment();
 }
