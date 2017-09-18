@@ -10,7 +10,6 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import me.xiaobailong24.daggerandroid.di.component.AppComponent;
 import me.xiaobailong24.daggerandroid.di.component.DaggerAppComponent;
-import me.xiaobailong24.daggerandroid.di.module.AppModule;
 import me.xiaobailong24.daggerlibrary.DaggerDelegate;
 import me.xiaobailong24.daggerlibrary.di.component.DaggerComponent;
 
@@ -30,12 +29,12 @@ public class MainApp extends Application implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
 
+        //Library 的依赖注入（顶级）
         mDaggerDelegate = new DaggerDelegate(this);
         mDaggerDelegate.onCreate();
 
-        //注入改Module中
+        //注入主 Module 中（该 Module 全局）
         mAppComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
                 .daggerComponent(getDaggerComponent())
                 .build();
         mAppComponent.inject(this);

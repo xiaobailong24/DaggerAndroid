@@ -27,9 +27,9 @@ public class DaggerActivityLifecycleCallbacks implements Application.ActivityLif
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Timber.w(activity + " ---> onActivityCreated");
         AndroidInjection.inject(activity);//Dagger.Android Inject for Activity
+        //如果该 Activity 的 Fragment 需要 Dagger 注入，
+        //即实现了 HasSupportFragmentInjector，就会注册上一步的 DaggerFragmentLifecycleCallbacks 来实现 Dagger 注入。
         if (activity instanceof HasSupportFragmentInjector && activity instanceof FragmentActivity) {
-            if (mFragmentLifecycleCallbacks == null)
-                mFragmentLifecycleCallbacks = new DaggerFragmentLifecycleCallbacks();
             ((FragmentActivity) activity).getSupportFragmentManager()
                     .registerFragmentLifecycleCallbacks(mFragmentLifecycleCallbacks, true);
         }

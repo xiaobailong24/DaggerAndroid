@@ -28,11 +28,13 @@ public class DaggerDelegate {
     public void onCreate() {
         Timber.plant(new Timber.DebugTree());
 
+        //顶级依赖注入
         mComponent = DaggerDaggerComponent.builder()
                 .daggerModule(new DaggerModule(mApplication))
                 .build();
         mComponent.inject(this);
 
+        //注册 ActivityLifecycleCallbacks 来进行 Activity/Fragment 的依赖注入
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
     }
 
