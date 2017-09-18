@@ -1,11 +1,3 @@
----
-title: MVVMArms系列 - 最新的 Dagger2.11 多 Module 实战详解
-date: 2017-09-17 17:08:39
-tags: [Android, Dagger2]
-categories: Android Blog
-description: MVVMArms系列 - 最新的 Dagger2.11 多 Module 实战
----
-
 # 前言
 距离首次接触 [Dagger2](https://github.com/google/dagger) 已经有半年的时间了，从最初的一脸懵逼，到慢慢的熟练使用，这个过程真的感谢 [MVPArms](https://github.com/JessYanCoding/MVPArms)，这半年在 **MVPArms** 真的学到很多东西，由此演变出的 [MVVMArms](https://github.com/xiaobailong24/MVVMArms) 可以说是这半年学习的结晶。其中在构建 **MVVMArms** 的过程中，采用了最新的 Dagger2.11，更好的支持了 Android 的依赖注入。好了，废话就说这么多，下面来通过一个例子来对 Dagger.Android 有更进一步的认识。
 
