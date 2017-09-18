@@ -31,7 +31,8 @@ public class DaggerActivityLifecycleCallbacks implements Application.ActivityLif
         AndroidInjection.inject(activity);//Dagger.Android Inject for Activity
         //如果该 Activity 的 Fragment 需要 Dagger 注入，
         //即实现了 HasSupportFragmentInjector，就会注册上一步的 DaggerFragmentLifecycleCallbacks 来实现 Dagger 注入。
-        if (activity instanceof HasSupportFragmentInjector && activity instanceof FragmentActivity) {
+        if ((activity instanceof HasSupportFragmentInjector || activity.getApplication() instanceof HasSupportFragmentInjector)
+                && activity instanceof FragmentActivity) {
             ((FragmentActivity) activity).getSupportFragmentManager()
                     .registerFragmentLifecycleCallbacks(mFragmentLifecycleCallbacks, true);
         }
