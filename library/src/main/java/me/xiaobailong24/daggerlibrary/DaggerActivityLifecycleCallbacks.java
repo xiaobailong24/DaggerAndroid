@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.android.AndroidInjection;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -15,6 +16,7 @@ import timber.log.Timber;
  * Created by xiaobailong24 on 2017/9/6.
  * Dagger.Android Inject to Activity
  */
+@Singleton
 public class DaggerActivityLifecycleCallbacks implements Application.ActivityLifecycleCallbacks {
     @Inject
     DaggerFragmentLifecycleCallbacks mFragmentLifecycleCallbacks;
