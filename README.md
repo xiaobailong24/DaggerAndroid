@@ -660,3 +660,11 @@ dependencies {
 1. [Dagger 2](https://github.com/google/dagger)
 2. [Dagger & Android](https://google.github.io/dagger/android.html)
 3. [Dagger2 学习](https://xiaobailong24.me/2017/03/21/Android-Dagger2)
+
+# 联系
+我是 ***xiaobailong24***，您可以通过以下平台找到我：
+- Github: [https://github.com/xiaobailong24](https://github.com/xiaobailong24)
+
+- 简书: [http://www.jianshu.com/u/3dac2ad17b48](http://www.jianshu.com/u/3dac2ad17b48)
+
+- 掘金: [https://juejin.im/user/59413cdd61ff4b006cbd8a8a](https://juejin.im/user/59413cdd61ff4b006cbd8a8a)
