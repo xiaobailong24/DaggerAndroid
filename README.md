@@ -2,6 +2,7 @@
 距离首次接触 [Dagger2](https://github.com/google/dagger) 已经有半年的时间了，从最初的一脸懵逼，到慢慢的熟练使用，这个过程真的感谢 [MVPArms](https://github.com/JessYanCoding/MVPArms)，这半年在 **MVPArms** 真的学到很多东西，由此演变出的 [MVVMArms](https://github.com/xiaobailong24/MVVMArms) 可以说是这半年学习的结晶。其中在构建 **MVVMArms** 的过程中，采用了最新的 Dagger2.11，更好的支持了 Android 的依赖注入。好了，废话就说这么多，下面来通过一个例子来对 Dagger.Android 有更进一步的认识。
 
 **下载源码一起看会更好！下载源码一起看会更好！下载源码一起看会更好！**
+
 DaggerAndroid：[https://github.com/xiaobailong24/DaggerAndroid](https://github.com/xiaobailong24/DaggerAndroid)
 
 > 如果你还没接触过 Dagger2，可以看我之前转载的一篇文章 - [Dagger2 学习](https://xiaobailong24.me/2017/03/21/Android-Dagger2/)，里面概念讲得很清晰。
@@ -10,7 +11,7 @@ DaggerAndroid：[https://github.com/xiaobailong24/DaggerAndroid](https://github.
 
 # 2 Gradle 配置
 要在 Android 中使用 **Dagger2** , 先添加 **Gradle** 配置，最新的版本可在 [GitHub](https://github.com/google/dagger/releases) 找到。这里使用了 **Android Studio 3.0 Beta6**。
-```
+```gradle
   //dagger.android
   implementation 'com.google.dagger:dagger:2.11'
   annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
@@ -25,7 +26,7 @@ DaggerAndroid：[https://github.com/xiaobailong24/DaggerAndroid](https://github.
 - @Subcomponent: 从名字可以看出，这也是一个注入器，只不过被 @Subcomponent 注解的是被 @Component 注解的下一层级，这就像 Subcomponent 继承于 Component 一样。
 - @Module: 为一些三方类库提供注入的对象，常配合 @Provides 使用。
 - AndroidInjectionModule: 主要提供 Dagger.Android 组件包，它应该被包含在注入 Application 的 Component 注入器的 modules 中。
-- AndroidInjection: Dagger.Android 注入的核心类，主要封装了一些静态方法用来注入四大组件和 Fragment。
+- AndroidInjection: Dagger.Android 注入的核心类，主要封装了一些静态方法用来为四大组件和 Fragment 进行注入。
 
 Dagger.Android 可以有两种注入方式，下面分别通过 Activity 和 Fragment 来看一下。
 
@@ -34,6 +35,7 @@ Dagger.Android 可以有两种注入方式，下面分别通过 Activity 和 Fra
 在整个 Application 的 Component 中添加 **AndroidInjectionModule**。
 AndroidInjectionModule 主要提供 Dagger.Android 组件包，它应该被包含在注入 Application 的 Component 注入器的 modules 中。
 此例中为 AppComponent。
+
 ***AppComponent***
 ```java
   @Singleton
@@ -124,6 +126,7 @@ AndroidInjectionModule 主要提供 Dagger.Android 组件包，它应该被包�
 ### 3.1.4 HasActivityInjector
 让 **MainApp** 实现 **HasActivityInjector** 接口，并注入  **DispatchingAndroidInjector<Activity>**。
 为 Activity 提供 AndroidInjector，这是 AndroidInjection.inject(Activity activity) 所需要的，具体见 3.1.6 的源码解析。
+
 ***MainApp***
 ```java
   public class MainApp extends Application implements HasActivityInjector {
@@ -204,13 +207,14 @@ AndroidInjectionModule 主要提供 Dagger.Android 组件包，它应该被包�
 Fragment 使用的是v4兼容包中的 **android.support.v4.app.Fragment**。
 ### 3.2.1 @Subcomponent
 由于在 Activity 依赖注入的第一步已经添加 **AndroidInjectionModule**，所以这里可以直接使用。这种方式其实是第一种方式的简化，如果 **MainFragmentSubcomponent** 和 **MainFragmentSubcomponent.Builder** 没有其他的方法或超类型，如下，
+
 ***MainFragmentSubcomponent***
-```
+```java
   @FragmentScope
   @Subcomponent
   public interface MainFragmentSubcomponent extends AndroidInjector<MainFragment> {
       @Subcomponent.Builder
-      public abstract class Builder extends AndroidInjector.Builder<MainFragment> {
+      abstract class Builder extends AndroidInjector.Builder<MainFragment> {
       }
   }
 ```
@@ -248,6 +252,7 @@ Fragment 使用的是v4兼容包中的 **android.support.v4.app.Fragment**。
 ### 3.2.3 HasSupportFragmentInjector
 让要依赖注入的目标 Fragment(即 MainFragment) 的宿主 Activity(即 MainActivity) 实现 **HasSupportFragmentInjector** 接口。
 为 Fragment 提供 AndroidInjector，这是 AndroidInjection.inject(Fragment fragment) 所需要的，具体见 3.2.5 的源码解析。
+
 ***MainActivity***
 ```java
   public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
@@ -290,6 +295,7 @@ Fragment 使用的是v4兼容包中的 **android.support.v4.app.Fragment**。
 
 ### 3.2.5 源码解析
 Fragment 注入的原理与 Activity 的类似，这里再强调一遍，其实第二种方式是第一种方式的简化，使用 **@ContributesAndroidInjector** 注解来自动生成 **Subcomponent**。
+
 ***AndroidSupportInjection#inject(Fragment fragment)*** 源码如下：
 ```java
   public static void inject(Fragment fragment) {
@@ -314,7 +320,7 @@ Fragment 注入的原理与 Activity 的类似，这里再强调一遍，其实�
   }
 ```
 ***AndroidSupportInjection#findHasFragmentInjector(Fragment fragment)***
-```
+```java
   private static HasSupportFragmentInjector findHasFragmentInjector(Fragment fragment) {
       Fragment parentFragment = fragment;
       while ((parentFragment = parentFragment.getParentFragment()) != null) {
@@ -370,6 +376,7 @@ DaggerComponent -> AppComponent -> MainActivitySubcomponent/MainFragmentSubcompo
 ## 4.1 Library Module
 ### 4.1.1 DaggerFragmentLifecycleCallbacks - 全局 Fragment 依赖注入
 这里使用 FragmentLifecycleCallbacks 全局监听 Fragment 的生命周期，对 Dagger.Android 进行统一注入管理。
+
 ***DaggerFragmentLifecycleCallbacks***
 ```java
   public class DaggerFragmentLifecycleCallbacks extends FragmentManager.FragmentLifecycleCallbacks {
@@ -403,6 +410,7 @@ DaggerComponent -> AppComponent -> MainActivitySubcomponent/MainFragmentSubcompo
 
 ### 4.1.2 DaggerActivityLifecycleCallbacks - 全局 Activity 依赖注入
 这里使用 ActivityLifecycleCallbacks 全局监听 Activity 的生命周期，对 Dagger.Android 进行统一注入管理。
+
 ***DaggerActivityLifecycleCallbacks***
 ```java
   public class DaggerActivityLifecycleCallbacks implements Application.ActivityLifecycleCallbacks {
@@ -469,6 +477,7 @@ DaggerComponent -> AppComponent -> MainActivitySubcomponent/MainFragmentSubcompo
   }
 ```
 其中 **DaggerModule** 主要提供一些全局依赖，这里只有一个 **provideApplication()** 方法，可以自行添加需要的东西。
+
 ***DaggerModule***
 ```java
   @Module
@@ -489,7 +498,7 @@ DaggerComponent -> AppComponent -> MainActivitySubcomponent/MainFragmentSubcompo
 
 ### 4.1.4 DaggerDelegate - 开始注入
 ***DaggerDelegate***
-```
+```java
   public class DaggerDelegate {
       @Inject
       DaggerActivityLifecycleCallbacks mActivityLifecycleCallbacks;
@@ -548,6 +557,7 @@ dependencies {
 ```
 可以看到，**dependencies = DaggerComponent.class**，这就是上文所说的：**AppComponent 是依赖于 DaggerComponent，也就是说，DaggerComponent 顶级注入器，AppComponent 是主 Module 的注入器**。
 其中，**AppModule** 主要提供主 Module 的一些全局依赖，可自行扩展。
+
 ***AppModule***
 ```
   @Module
@@ -561,6 +571,7 @@ dependencies {
 ```
 
 ### 4.2.2 MainApp - 真正注入的地方
+***MainApp***
 ```java
   public class MainApp extends Application implements HasActivityInjector {
       @Inject
@@ -606,8 +617,9 @@ dependencies {
 ### 4.2.3 MainActivityModule/MainFragmentModule
 由第一节的例子可知：当 Subcomponent 和 它的 Builder 没有其它方法或超类型时，可以不再需要手写 Subcomponent，而是通过 **@ContributesAndroidInjector** 注解来自动生成。
 所以，这里的 MainActivitySubcomponent/MainFragmentSubcomponent 可以省略；这样，MainActivityModule/MainFragmentModule 如下：
-***可以省略；这样，MainActivityModule***
-```
+
+***MainActivityModule***
+```java
   @Module
   public abstract class MainActivityModule {
     @ActivityScope
@@ -616,7 +628,7 @@ dependencies {
   }
 ```
 ***MainFragmentModule***
-```
+```java
   @Module
   public abstract class MainFragmentModule {
       @FragmentScope
