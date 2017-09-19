@@ -274,6 +274,7 @@ Fragment 使用的是v4兼容包中的 **android.support.v4.app.Fragment**。
 
 > 如果使用 **android.app.Fragment**，Activity 应该实现 **HasFragmentInjector** 接口，并注入  **DispatchingAndroidInjector<Fragment>**。
 > 这一步也可以在 Application 实现 HasSupportFragmentInjector 接口，类似 3.1.4 所述。
+
 ### 3.2.4 AndroidInjection
 最后，在目标 Fragment 的 **onAttach()** 方法中进行注入。
 
